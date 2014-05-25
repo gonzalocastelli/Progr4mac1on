@@ -204,6 +204,46 @@ void sumarmatrices (char *matrix1 , char *matrix2 , char *allocation)
 	}
 }
 
+
+/*Funcion que resta dos matrices*/
+/*RECIBE: Punteros al inicio de las matrices y puntero a partir del cual se creara la matriz resultado*/
+/*Devuelve: NADA*/
+
+void restarmatrices (char *matrix1 , char *matrix2 , char *allocation)
+{
+
+	char resta;
+
+	char M=0;
+	char N=0;
+
+	char i=0;
+
+	char state=0;
+
+	if ((state = checkdimentions (matrix1, matrix2)) == FINE )
+	{
+
+		M=rowinfo(matrix1);
+		N=columninfo(matrix1);		/*Take row and column sample (they are the same, we take it from the first)*/
+
+		for (i=0 ; i<(M*N) ; i++)
+		{
+			resta = ( *(matrix1 + i) + *(matrix2 + i) );
+			*(allocation+i) = suma;
+		}
+
+	}
+
+	else
+	{
+
+		printf ("Matrix' dimentions are different\n");
+		exit (1);
+
+	}
+}
+
 /*Funcion que compara las dimensiones de dos matrices*/
 /*RECIBE los punteros al comienzo de ambas matrices*/
 /*DEVUELVE 1 si tienen igual dimension, 0 si tienen distinta dimension*/
