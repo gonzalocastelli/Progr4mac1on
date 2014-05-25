@@ -24,24 +24,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
 #include <time.h>
 
 #ifndef MATLIB_H
 
 	#define MATLIB_H
 
+/*Constantes*/
+
+#define FINE 1
+#define ERROR 0
 
 /*Prototipos de funciones*/
 
-char *mk_matrix (int, int, char);
-char *mk_crazy_matrix (int, int, char, char);
+char *mk_matrix (char, char, char);
+char *mk_crazy_matrix (char, char, char, char);
 
 char randomize (char, char);
 
 char rowinfo (char*);
 char columninfo (char*);
 
+void sumarmatrices (char *, char * , char *);
+char checkdimentions (char *, char *);
 
 
 /*Funcion que crea una matriz de N filas, M columnas, con sus celdas inicializadas en el valor initval*/
@@ -54,7 +59,7 @@ char *mk_matrix (char N, char M, char initialval)
 
 	char *matrix = NULL;
 
-	if( (matrix = (char *) malloc ((N*M)+2) == NULL) /*Save space for info*/
+	if( (matrix = (char *) malloc ((N*M)+2)) == NULL) /*Save space for info*/
 	{
 		printf ("Not enough memory to allocate matrix\n");	/*Exit program if not enough mem*/
 		exit (1);
@@ -83,7 +88,7 @@ char *mk_crazy_matrix (char M, char N, char minval, char maxval)
 
 	char *matrix = NULL;
 
-	if ((matrix = (char *) malloc ((M*N)+2) == NULL)
+	if ((matrix = (char *) malloc ((M*N)+2)) == NULL)
 	{
 		printf ("Not enough memory to allocate matrix\n");	/*No memory*/
 		exit (1);
@@ -157,5 +162,66 @@ char columninfo (char *matrix)
 
 }
 
+/*CORE CALCULTAION*/
+
+
+/*Funcion que suma dos matrices*/
+/*RECIBE los punteros donde comienzan las matrices y un puntero donde se escribira la matriz resultado*/
+/*DEVUELVE: NADA*/
+
+void sumarmatrices (char *matrix1 , char *matrix2 , char *allocation)
+{
+
+	char suma;
+
+	char M=0;
+	char N=0;
+
+	char i=0;
+
+	char state=0;
+
+	if ((state = checkdimentions (matrix1, matrix2)) == FINE )
+	{
+
+		M=rowinfo(matrix1);
+		N=columninfo(matrix1);		/*Take row and column sample (they are the same, we take it from the first)*/
+
+		for (i=0 ; i<(M*N) ; i++)
+		{
+			suma = ( *(matrix1 + i) + *(matrix2 + i) );
+			*(allocation+i) = suma;
+		}
+
+	}
+
+	else
+	{
+
+		printf ("Matrix' dimentions are different\n");
+		exit (1);
+
+	}
+}
+
+/*Funcion que compara las dimensiones de dos matrices*/
+/*RECIBE los punteros al comienzo de ambas matrices*/
+/*DEVUELVE 1 si tienen igual dimension, 0 si tienen distinta dimension*/
+
+char checkdimentions (char *matrix1 , char *matrix2)
+{
+
+	char state = FINE;
+
+	char row1 = *(matrix1 - 2);
+	char column1 = *(matrix1 - 1);
+
+	char row2 = *(matrix2 - 2);
+	char column2 = *(matrix2 - 1);	/*Extract info from each matrix*/
+
+	if ((row1 != row2) && (column1 != column2))
+		state = ERROR;				/*If they differ, function returns error*/
+
+}
 
 #endif
