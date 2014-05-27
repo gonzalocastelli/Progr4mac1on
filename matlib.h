@@ -10,8 +10,7 @@
 	Inicializar matriz en random
 
 	Obtener cantidad de filas y/o columnas de una matriz
-	Valor maximo
-	Valor Minimo
+	Imprimir matriz en pantalla
 
 	Sumar matrices
 	Restar matrices
@@ -42,12 +41,12 @@ char *mk_crazy_matrix (char, char, char, char);
 
 char randomize (char, char);
 
-
 char rowinfo (char*);
 char columninfo (char*);
+void printm (char *);
 
-void sumarmatrices (char *, char * , char *);
-void restarmatrices (char *, char*, char*);
+char *sumarmatrices (char *, char * , char *);
+char *restarmatrices (char *, char*, char*);
 
 char checkdimentions (char *, char *);
 
@@ -175,14 +174,42 @@ char columninfo (char *matrix)
 
 }
 
+/*Funcion que imprime matriz en pantalla*/
+/*RECIBE el puntero donde comienza la matriz, que debe estar creada por mk_matrix*/
+
+void printm (char *matrix)
+{
+
+	unsigned char rows=0;
+	unsigned char columns=0;
+
+	rows = rowinfo (matrix);
+	columns = columninfo (matrix);
+	
+	int i=0;
+	int j=0;
+
+	for (i=0 ; i<rows ; i++)
+	{
+		for (j=0 ; j<columns ; j++)
+			printf ("%d\t", *(matrix++));
+
+		printf ("\n");
+	}
+
+
+}
+
+
 /*CORE CALCULTAION*/
 
 
 /*Funcion que suma dos matrices*/
-/*RECIBE los punteros donde comienzan las matrices y un puntero donde se escribira la matriz resultado*/
-/*DEVUELVE: NADA*/
+/*RECIBE los punteros donde comienzan las matrices y un puntero donde se escribira la info y la matriz resultado*/
+/*DEVUELVE: Puntero donde empieza la matriz con los datos*/
+/*CONSEJO: el puntero que retorna la funcion puede ser el mismo que el que recibe la funcion*/
 
-void sumarmatrices (char *matrix1 , char *matrix2 , char *allocation)
+char *sumarmatrices (char *matrix1 , char *matrix2 , char *allocation)
 {
 
 	char suma;
@@ -200,11 +227,18 @@ void sumarmatrices (char *matrix1 , char *matrix2 , char *allocation)
 		M=rowinfo(matrix1);
 		N=columninfo(matrix1);		/*Take row and column sample (they are the same, we take it from the first)*/
 
+		*allocation = M;
+		*(allocation+1) = N;		/*Save row and column info*/
+
+		allocation = allocation+2;	/*Place pointer where matrix starts*/
+
 		for (i=0 ; i<(M*N) ; i++)
 		{
 			suma = ( *(matrix1 + i) + *(matrix2 + i) );
 			*(allocation+i) = suma;
 		}
+
+		return (allocation);
 
 	}
 
@@ -219,10 +253,10 @@ void sumarmatrices (char *matrix1 , char *matrix2 , char *allocation)
 
 
 /*Funcion que resta dos matrices*/
-/*RECIBE: Punteros al inicio de las matrices y puntero a partir del cual se creara la matriz resultado*/
-/*Devuelve: NADA*/
+/*RECIBE: Punteros al inicio de las matrices y puntero a partir del cual se creara la info de la matriz y la matriz resultado*/
+/*Devuelve: puntero donde empieza la matriz con los datos*/
 
-void restarmatrices (char *matrix1 , char *matrix2 , char *allocation)
+char *restarmatrices (char *matrix1 , char *matrix2 , char *allocation)
 {
 
 	char resta;
@@ -240,12 +274,19 @@ void restarmatrices (char *matrix1 , char *matrix2 , char *allocation)
 		M=rowinfo(matrix1);
 		N=columninfo(matrix1);		/*Take row and column sample (they are the same, we take it from the first)*/
 
+		*allocation = M;
+		*(allocation+1) = N;		/*Save row and column info*/
+
+		allocation = allocation+2;	/*Place pointer where matrix starts*/
+
+	
 		for (i=0 ; i<(M*N) ; i++)
 		{
-			resta = ( *(matrix1 + i) + *(matrix2 + i) );
+			resta = ( *(matrix1 + i) - *(matrix2 + i) );
 			*(allocation+i) = resta;
 		}
 
+		return (allocation);
 	}
 
 	else
@@ -266,15 +307,18 @@ char checkdimentions (char *matrix1 , char *matrix2)
 
 	char state = FINE;
 
-	char row1 = *(matrix1 - 2);
-	char column1 = *(matrix1 - 1);
+	char row1, row2, column1, column2;
 
-	char row2 = *(matrix2 - 2);
-	char column2 = *(matrix2 - 1);	/*Extract info from each matrix*/
+	row1 = rowinfo (matrix1);
+	column1 = columninfo (matrix1);		/*Extract info from each matrix*/
+	row2 = rowinfo (matrix2);
+	column2 = columninfo (matrix2);
 
-	if ((row1 != row2) && (column1 != column2))
+	if ((row1 != row2) || (column1 != column2))
 		state = ERROR;				/*If they differ, function returns error*/
 
+	return state;
 }
+
 
 #endif
