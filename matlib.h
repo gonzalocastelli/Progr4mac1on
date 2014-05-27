@@ -42,10 +42,13 @@ char *mk_crazy_matrix (char, char, char, char);
 
 char randomize (char, char);
 
+
 char rowinfo (char*);
 char columninfo (char*);
 
 void sumarmatrices (char *, char * , char *);
+void restarmatrices (char *, char*, char*);
+
 char checkdimentions (char *, char *);
 
 
@@ -108,8 +111,11 @@ char *mk_crazy_matrix (char M, char N, char minval, char maxval)
 	*(matrix+0) = M;
 	*(matrix+1) = N;
 
-	for (i=2 ; i<((M*N)+2) ; i++, randomnumber = randomize(minval, maxval))
+	for (i=2 ; i<((M*N)+2) ; i++)
+	{
+	  randomnumber = randomize(minval, maxval);
 	  *(matrix+i) = randomnumber;
+	}
 
 	return (matrix+2);	/*Return pointer + 2 because of rows and columns info*/
 
@@ -120,12 +126,18 @@ char *mk_crazy_matrix (char M, char N, char minval, char maxval)
 /*RECIBE: valor minimo y maximo*/
 /*DEVUELVE: Numero aleatorio comprenido entre el minimo y maximo*/
 
+
 char randomize (char minval, char maxval)
 {
 
 	int randomnumber=0;
+	static int seed=0;
 
-	srand (time(NULL));	/*Seed*/
+	if (seed == 0)
+		{
+		srand (time(NULL));	/*Seed*/ /*Only implants when function is called for the first time*/
+		seed++;
+		}	
 
 	randomnumber = ( (rand() % (maxval-minval)) + minval);	/*Randomize according to minval and maxval*/
 
@@ -134,13 +146,14 @@ char randomize (char minval, char maxval)
 }
 
 
+
 /*Funcion que recibe un puntero a una matriz y devuelve su cantidad de filas,
  siempre y cuando dicha matriz haya sido creada por mkmatrix*/
 
 char rowinfo (char *matrix)
 {
 
-	int rows=0;
+	char rows=0;
 
 	rows = *(matrix-2);
 
@@ -154,7 +167,7 @@ siempre y cuando la misma haya sido creada por mk_matrix*/
 char columninfo (char *matrix)
 {
 
-	int columns=0;
+	char columns=0;
 
 	columns = *(matrix - 1);
 
@@ -230,7 +243,7 @@ void restarmatrices (char *matrix1 , char *matrix2 , char *allocation)
 		for (i=0 ; i<(M*N) ; i++)
 		{
 			resta = ( *(matrix1 + i) + *(matrix2 + i) );
-			*(allocation+i) = suma;
+			*(allocation+i) = resta;
 		}
 
 	}
