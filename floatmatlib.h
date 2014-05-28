@@ -186,9 +186,6 @@ void printm (float *matrix)
 
 	rows = rowinfo (matrix);
 	columns = columninfo (matrix);
-
-	printf ("FILAS: %d\n", rows);
-	printf ("COLUMNAS: %d\n", columns);
 	
 	int i=0;
 	int j=0;
