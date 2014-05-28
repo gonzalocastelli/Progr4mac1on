@@ -90,7 +90,7 @@ float *mk_crazy_matrix (char M, char N, float minval, float maxval)
 
 	float *matrix = NULL;
 
-	if ((matrix = (float *) malloc ((M*N)+2)) == NULL)
+	if ((matrix = (float *) malloc ((M*N)+(2*(sizeof(float))))) == NULL)	//also all the other places where you have +2
 	{
 		printf ("Not enough memory to allocate matrix\n");	/*No memory*/
 		exit (1);
