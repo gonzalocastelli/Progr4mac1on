@@ -36,8 +36,8 @@
 
 /*Prototipos de funciones*/
 
-float *mk_matrix (char, char, float);
-float *mk_crazy_matrix (char, char, float, float);
+float *mk_matrix (char, char, int);
+float *mk_crazy_matrix (char, char, int, int);
 
 float randomize (float, float);
 
@@ -56,12 +56,12 @@ char checkdimentions (float *, float *);
 /*Devuelve un puntero al inicio de la matriz*/
 /*El tipo de elementos de la matriz es char*/
 
-float *mk_matrix (char N, char M, float initialval)
+float *mk_matrix (char M, char N, int initialval)
 {
 
 	float *matrix = NULL;
 
-	if( (matrix = (float *) malloc ((N*M)+2)) == NULL) /*Save space for info*/
+	if( (matrix = (float *) malloc (M*N*sizeof(float)+2*sizeof(float))) == NULL) /*Save space for info*/
 	{
 		printf ("Not enough memory to allocate matrix\n");	/*Exit program if not enough mem*/
 		exit (1);
@@ -69,12 +69,12 @@ float *mk_matrix (char N, char M, float initialval)
 
 	int i=0;
 
-	*(char *)(matrix+0)= N;		/*Save rows and columns data*/
-	*(char *)(matrix+1)= M;
+	*(char *)(matrix+0)= M;		/*Save rows and columns data*/
+	*(char *)(matrix+1)= N;
 
 	for (i=2 ; i<((M*N)+2) ; i++)
 
-	  *(matrix+i) = initialval;			/*Initializes matrix with selected number*/
+	  *(matrix+i) = (float)initialval;			/*Initializes matrix with selected number*/
 
 	return (matrix+2);	/*Return pointer + 2*/
 
@@ -85,12 +85,12 @@ float *mk_matrix (char N, char M, float initialval)
 /*Devuelve un puntero al inicio de la matriz*/
 /*El tipo de elementos de la matriz es char*/
 
-float *mk_crazy_matrix (char M, char N, float minval, float maxval)
+float *mk_crazy_matrix (char M, char N, int minval, int maxval)
 {
 
 	float *matrix = NULL;
 
-	if ((matrix = (float *) malloc ((M*N)+2)) == NULL)
+	if ((matrix = (float *) malloc ((M*N)+2*sizeof(float))) == NULL)
 	{
 		printf ("Not enough memory to allocate matrix\n");	/*No memory*/
 		exit (1);
