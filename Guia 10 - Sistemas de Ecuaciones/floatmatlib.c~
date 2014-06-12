@@ -348,7 +348,7 @@ float *type_matrix (char M, char N)
 	int *pstate;
 	float *matrix = NULL;
 	char marcador1=1;
-	int marcador2=2;
+	
 	int i=0;
 	
 	
@@ -371,11 +371,8 @@ float *type_matrix (char M, char N)
 	for (i=2 ; i<((M*N)+2) ; i++)
 	{
 		
-		printf ("N [%d] [%d]: ", marcador1, (((marcador2++)%N))+1);		/*Print visual al llenar la matriz*/
+		printf ("N [%d]: ", marcador1++);		/*Print visual al llenar la matriz*/
 	  	*(matrix+i) = getmynumber (pstate);
-		
-		if (((marcador2++%N)+1) == N)		/*Contador de filas*/
-			marcador1++;
 
 		if (estado == ERROR)
 			{

@@ -9,7 +9,7 @@
 
 /*Programa que calcula sistemas de ecuaciones*/
 
-void main (int)
+int main (void)
 
 {
 

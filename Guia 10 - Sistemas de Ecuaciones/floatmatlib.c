@@ -6,7 +6,7 @@
 
 /*Libreria para manejo de matrices. Inlcuye funciones para:
 
-	Crear matriz
+	Crear matriz e ingresar componentes por teclado
 	Inicializar matriz
 	Inicializar matriz en random
 
@@ -15,8 +15,9 @@
 
 	Sumar matrices
 	Restar matrices
-	Multiplicar matrices
-	Calcular determinante
+	Multiplicar o restar por filas
+	
+	
 
 */
 
@@ -340,7 +341,8 @@ void restfil (int fila1, int fila2, float *matrix)
 
 }
 
-
+/*Funcion que crea una matriz y permite ingresar sus componentes por teclado*/
+/*Devuelve un puntero a donde comienza la matriz*/
 float *type_matrix (char M, char N)
 {
 
@@ -386,7 +388,8 @@ float *type_matrix (char M, char N)
 
 }
 
-
+/*Funcion que me permite ingresar datos por teclado*/
+/*Devuelve un float con el numero tecleado*/
 float getmynumber (int * pstate)		//recibe donde quiere que guarde el valor terminado, y la variable estado
 {
 

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "floatmatlib.c"
 
 #define MAXINCOG 100
 #define ERROR 0
@@ -57,7 +58,7 @@ int main (void)
 	
 
 	ptr = type_matrix (cant_incog,cant_incog + 1);
-
+	
 
 	printf ("\n\nUsted ha ingresado la matriz: \n");
 

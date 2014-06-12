@@ -18,7 +18,7 @@
 	Sumar matrices
 	Restar matrices
 	Multiplicar matrices
-	Calcular determinante
+	y mas...
 
 */
 

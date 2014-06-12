@@ -49,6 +49,6 @@ void multfil (int fila, float M, float *matrix);
 void restfil (int fila1, int fila2, float *matrix);
 
 float *type_matrix (char M, char N);
-int getnum (void);
+float getmynumber (int *);
 
 #endif
